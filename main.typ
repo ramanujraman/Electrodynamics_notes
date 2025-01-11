@@ -1,4 +1,6 @@
+#v(50%)
 #align(center,text(25pt,font: "New Computer Modern", lang: "en")[Electrodynamics])
+#align(center,text(14pt,font:"New Computer Modern", lang: "en")[Ramanuj Raman])
 #pagebreak()
 #outline( title: [Contents], indent: auto)
 #show outline.entry.where(
