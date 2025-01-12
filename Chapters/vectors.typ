@@ -2,7 +2,7 @@
 /*-----theorem environment--------- */
 #import "@preview/ctheorems:1.1.3":*
 #show: thmrules
-
+#show link: underline
 #let theorem = thmbox(
 "theorem", // identifier
 "Theorem", // head
@@ -20,6 +20,11 @@ fill: rgb("#efe6ff"))
 base: "theorem", // base - use the theorem counter
 fill: rgb("#f8e8e8")
 )
+#let think = thmbox(
+"theorem", // identifier
+"Think", // head
+fill: rgb("#f4fde5")
+).with(numbering: none)
 
 #let proof = thmproof("proof", "Proof")
 #let solution = thmproof("solution", "Solution")
@@ -154,6 +159,126 @@ $
 $
 Now one can define $l_(i j):= vu(e)_i dprod vu(e)_j$ and we arrive at the following equation defining vector transformations
 $
-  a'_i=l_(i j) a_j
+  a'_j=l_(i j) a_i
 $<def-eq-vector-transformation>
 Now how to determine $l_(i j)$?
+#exercise[Show that $l_(i j)$ is a rotation matrix.#emph[Hint: Use the fact that $vu(e)_i dprod vu(e')_j=l_(i j)$]]
+Now this rule is clearly valid for every vector in $O_1$ and $O_2$ and I would like state the following results
++ If we have $vb(c)=alpha vb(a) + beta vb(b)$ then well have $c'_j=l_(i j)c_i$.
++ Say for the nth derivative of $vb(r)$ the $dv(r'_j,t,n)=l_(i j) dv(r_i,t,n)$.
+#exercise[Prove the above the two properties.]
+Now it is the time to introduce another important concept in vector analysis, the concept of a *scalar product*.
+#definition("Scalar Product")[The scalar product of two vectors $vb(a)$ and $vb(b)$ is defined as
+$
+  vb(a) dprod vb(b)=a_i b_i
+$<definition-scalar-product>
+]
+Now one would love to ask this question how dot product change under coordinate transformation and we'll leave it as an exercise for you.
+#exercise[Show that scalar product is invariant under the coordinate transformation.]<exercise-scalar-prod-remain-invariant-under-lin-transf>
+
+One more way to define scalar product or dot product is the following,
+$
+  vb(a) dprod vb(b) = abs(a)abs(b) cos(theta)
+$<geometric-definition-dot-prod>
+#think[How @definition-scalar-product and @geometric-definition-dot-prod are related?]
+Now another important tool is *vector product*,
+#definition("Vector Product")[For to vectors $va(a)$ and $va(b)$ one can define their vector product in the following manner
+$
+  vb(a) cprod vb(b) = epsilon_(i j k) hat(e)_i a_(j) b_(k)
+$<def-eq-vector-prod>
+]
+where $epsilon_(i j k)$ is  #link("https://www.homepages.ucl.ac.uk/~ucappgu/seminars/levi-civita.pdf")[Levi-Civita-Tensor]. One can also give a geometric
+definition in the following manner
+$
+  vb(a) cprod vb(b) = abs(a)abs(b) sin(theta) hat(n)
+$<def-eq-geo-def-of-cprod>
+where $hat(n)$ is perpendicular to both $vb(a)$ and $vb(b)$.
+
+#think[How @def-eq-geo-def-of-cprod and @def-eq-vector-prod are related?]
+here we are using Levi-Civita tensor $epsilon_(i j k)$ so I would like to enlist few to its properties
++ Let we have $epsilon_(i j k)$ for even permutation of i,j,k we have +1, for odd permutations of i,j,k we'll have -1 and other we'll have 0.
++ $
+    epsilon_(i j k)epsilon_(p q k)=delta_(i p)delta_(j q)-delta_(i q)delta_(j p)
+  $<Eq-one-index-contrc-levi-tens>
++ $
+    epsilon_(i j k)epsilon_(p j k)=2 delta_(i p)
+  $<Eq-two-index-contrc-levi-tens>
++ $
+    epsilon_(i j k)epsilon_(i j k)=6
+  $<Eq-three-index-contrc-levi-tens>
+
+#exercise[Show that for the vectors $va(a)$,$va(b)$ and $va(c)$ to be coplanar then
+  $
+    epsilon_(i j k)a_i b_j c_k=0
+  $]
+#exercise[If $va(a)$ and $va(b)$ are any vectors then,
+  $
+    lr((va(a) cprod va(b))) dprod (va(a) cprod va(b))+(va(a) dprod va(b))^2 = abs(va(a))^2 abs(va(b))^2
+  $ ]
+Another important type of product that one encounters quite often is *triple product*.
+Two kinds of triple product quite famous are *Vector Triple Product* and *Vector Scalar Product*. So let us start with triple scalar product simply can be given as
+$va(a) dprod (va(a) cprod va(b))= epsilon_(i j k)a_i b_j c_k$
+and triple vector product
+$ va(c) cprod (va(b) cprod va(c))= epsilon_(i j k)vu(e_i)c_j(va(b) cprod va(c))_k $
+I'll leave the rest to reader to work out and get this result
+$
+  va(a) cprod (va(b) cprod va(c))=va(b)(va(a) cprod va(c))-va(c)(va(a)cprod va(b))
+$
+and there is one more result I would like to put forward
+$
+  va(a) cprod (va(b) cprod va(c))+va(c)cprod(va(a)cprod va(b))+va(b)cprod(va(c)cprod va(a))=0
+$
+#example[
+  Show $va(a)dprod(va(b) cprod va(c))$ vanishes identically if two of three vectors are proportional to each other.
+  #solution[
+    By using levi-civita tensor we have
+      $
+        va(a) dprod (va(b) cprod va(c))=epsilon_(i j k) a_i b_j c_k
+      $
+        without loss of generality, let $a=lambda b$
+      $
+        va(a)dprod(va(b)cprod va(c))= lambda epsilon_(i j k) b_i b_j c_k
+      $
+        Now the expression $epsilon_(i j k) b_i b_j c_k$ is actually the determinant of the following matrix
+      $
+            epsilon_(i j k)b_i b_j c_k = mdet(
+                b_1 , b_2 , b_3 ;
+                b_1 , b_2 , b_3 ;
+                c_1 , c_2 , c_3
+            )
+      $
+        because we have two rows same so by the properties of the determinant we have
+      $
+        epsilon_(i j k)b_i b_j c_k = 0
+      $
+        hence proved that, #emph[if two of three vectors are proportional to each other].
+  ]
+]
+#exercise[
+  If $vu(e)$ is an unit vector and $vu(a)$ an arbitrary vector then show that
+    $
+      va(a)=(va(a) dprod vu(e))+vu(e)cprod(va(a) cprod vu(e))
+    $
+    This shows that $va(a)$ can be resolved into component parallel to and one perpendicular to an arbitrary direction $vu(e)$.
+]
+#exercise[
+    Prove the following identites
+    + $
+            (va(a)cprod va(b))dprod(va(c)cprod va(d))=mdet(
+            va(a)dprod va(c) , va(b)dprod va(c) ;
+            va(a)dprod va(d) , va(b)dprod va(d)
+        )
+      $
+    + $
+        (va(a)cprod va(b))cprod(va(c)cprod va(d))=[va(c)dprod(va(d)cprod va(a))]va(b)-[va(c)dprod(va(d)cprod va(b))]va(a)
+      $
+
+      $
+        (va(a)cprod va(b))cprod(va(c)cprod va(d))=[va(a)dprod(va(b)cprod va(d))]va(c)-[va(a)dprod(va(b)cprod va(c))]va(d)
+      $
+    + $
+      lr([va(a)dprod(va(b)cprod va(c))])va(d)=lr([va(d)dprod(va(b)cprod va(c))])va(a)+lr([va(a)dprod(va(d)cprod va(c))])va(b)+lr([va(a)dprod(va(b)cprod va(d))])
+      va(c)
+      $
+
+]
