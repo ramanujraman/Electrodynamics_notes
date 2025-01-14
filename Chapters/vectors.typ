@@ -42,6 +42,7 @@ stroke: rgb("#000000") + 1pt
 base_level: 1,
 stroke: rgb("#000000") + 1pt
 )
+#let remark = thmplain("remark", "Remark").with(numbering: none)
 
 #let definition = thmbox(
 "definition",
@@ -71,6 +72,7 @@ base_level: 1, stroke: rgb("#68ff68") + 1pt
 #set par(justify: true)
 #set text(font: "New Computer Modern", lang: "en", size: 11pt)
 #set math.equation(numbering: "(1)",supplement: [Eq.])
+#show bibliography: set heading(numbering: "1.")
 /*-----------Some Mathematical shortcuts----------------------*/
 #let A = (i,j) => $a_(#i #j)$
 = #chapter
@@ -94,7 +96,7 @@ Now another reason to study this topic is that it is the first field theory that
 classical field theory but not in a big framework but a very specific one. But one only realise this after a couple of advanced courses in field theory. And
 definitely one'll learn quite a few advanced mathematical techniques. In rest of the chapter I'll introduce mathematical techniques required to study this course,
 starting with vector analysis.
-== Vector and Tensor Analysis
+== Some Important Definitions and Conventions
 Before talking about vectors and tensors let me introduce some basic definitions of vector analysis. So what is a scalar? well we all learnt in high school that
 a scalar is something that has only magnitude and no direction. For example, mass, temperature, pressure etc. are all scalars.
 #definition("Scalar")[A scalar is quantity specified by a single number and remains invariant under rotations.]<definition-Scalar>
@@ -117,7 +119,8 @@ this equation can further be shrinked into the following form
 $
   tilde(x)_i= a_(i 1) x_1+a_(i 2) x_2+a_(i 3) x_3
 $
-where #emph[i] is the $#emph[i]^("th")$ index of the vector and one realise that this can written as sum over a repeated index. So the final form of the equation is
+where #emph[i] is the $#emph[i]^("th")$ index of the vector and one realise that this can written as sum over a repeated index. So the final form of the equation
+is
 $
   tilde(x)_i= a_(i j) x_j
 $<defn-eq-einstein-summation-convention>
@@ -135,7 +138,7 @@ $
 $
 ]<definition-tensor>
 In simple words, if some quantity have n-indexes then it is a tensor of $n^("th")$ order. \
-=== Vector Algebra and Transformation
+== Vector Algebra and Transformation
 As for the rule of algebra are concerned, the following rules are followed
 + Each vector have n components and can be given as a column matrix.
 + All rules of matrix algebra are valid.
@@ -216,8 +219,8 @@ here we are using Levi-Civita tensor $epsilon_(i j k)$ so I would like to enlist
     lr((va(a) cprod va(b))) dprod (va(a) cprod va(b))+(va(a) dprod va(b))^2 = abs(va(a))^2 abs(va(b))^2
   $ ]
 Another important type of product that one encounters quite often is *triple product*.
-Two kinds of triple product quite famous are *Vector Triple Product* and *Vector Scalar Product*. So let us start with triple scalar product simply can be given as
-$va(a) dprod (va(a) cprod va(b))= epsilon_(i j k)a_i b_j c_k$
+Two kinds of triple product quite famous are *Vector Triple Product* and *Vector Scalar Product*. So let us start with triple scalar product simply can be given
+as $va(a) dprod (va(a) cprod va(b))= epsilon_(i j k)a_i b_j c_k$
 and triple vector product
 $ va(c) cprod (va(b) cprod va(c))= epsilon_(i j k)vu(e_i)c_j(va(b) cprod va(c))_k $
 I'll leave the rest to reader to work out and get this result
@@ -282,3 +285,82 @@ $
       $
 
 ]
+== Differential Calculus
+Suppose we have a function $f(x)$ and we want to know how much of the function changes in a certain direction we can take a derivative in that particular
+directionand talk about the rate of change in that direction.
+$
+  dd(f)=dv(f,x)dd(x)
+$
+Now this is the case for a single variable function but now consider a multivalued function as $f(x_1,...x_N)$ how one talks about infinitesimal change in the
+function itself? One can define the change in same way as one defined for single variable function
+$
+  dd(f)=sum_(i=1)^(N)pdv(f,x_i)dd(x_i)
+$
+and the quantity $pdv(f,x_i)$ is called the partial derivative of the function $f$ with respect to $x_i$ keeping other variables constant. Now one can define
+the gradient of the function as
+#definition("Gradient of the function")[The gradient of the function $f$ is defined as
+  $
+    grad f(x_1...x_N) = pdv(f,x_i)vu(e)_i forall i
+  $
+]
+Now one can relate the change in the function with the gradient of the function as
+$
+  dd(f)=grad f(x_1...x_N) dprod dd(va(x))
+$
+#lemma[The direction of the gradient of the function is the direction of the maximum change in the function.
+  #proof[
+Now consider $dd(f)$ be the change in the function around some point $va(x)_o$ and then for a fixed amount of change $dd(va(r))$ the change in the function
+$ dd(f)=abs(grad f)abs(dd(va(r)))cos(theta) $ where $theta$ is the angle between the gradient and the change in the length element. Now the direction of
+maximum change in the function is that of the gradient of the function and more over the $abs(grad f)$ gives the slope of the function along this maximal
+direction.]]
+#remark[
+  For $grad f =0$ we have a stationary point so in can be either a valley or a top or just a saddle point.
+]
+#think[
+  Now as we saw earlier that we took gradient of a scalar function and got something to do with vectors. Is the converse also true that for each vector field
+  one can define a scalar field using a gradeint of a scalar function?
+]
+Now knowing or unknowingly we have used the concept of a *differential operator* or *del operator* which is defined as
+$
+  grad = vu(e)_i pdv(,x_i)
+$<def-eq-del-operator>
+Now as for a vector we have three possible multiplicative operations similarly we have three possible ways in which del can act on different functions?
++ On a scalar function: $grad f$
++ On a vector function: $grad dprod va(v)$,(the divergence)
++ On a vector function: $grad cprod va(v)$,(the curl)
+
+#definition("Divergence of a vector field")[The divergence of a vector field $va(v)$ is defined as
+  $
+    div va(v)=grad dprod va(v) = pdv(v_i,x_i)
+  $
+]
+one can also geometric interpertation of the divergence as how much of field is flowing out of a point. But this point becomes more clear when we talk about
+*The Divergence Theorem* after a couple of sections.\
+Now similarly one can define a new quantity called *curl* of a vector field.
+#definition("Curl of a vector field")[The curl of a vector field $va(v)$ is defined as
+  $
+    curl va(v)=grad cprod va(v) = epsilon_(i j k)pdv(v_i,x_j)vu(e)_k
+  $
+]
+one can also give a geometric interpretation of the curl as how much of the field is rotating around a point. But this point will also becomes more clear when
+we talk about *Stokes' Theorem* after a couple of sections.
+=== Some Important Identities
+So there are 6 important product rules that are quite useful in vector calculus which I list down here
++ $
+  grad f g = f grad g + g grad f
+$
++ $
+  grad (va(A) dprod va(B))= va(A) cprod (grad cprod B) + va(B) cprod (grad cprod A) + (va(A) dprod grad)va(B) + (va(B) dprod grad)va(A)
+$
++ $
+  div (f va(A)) = f div va(A) +va(A) dprod grad f
+$
++ $
+  div (va(A) cprod va(B)) = va(B) dprod curl va(A) - va(A) dprod curl va(B)
+$
++ $
+  curl (f va(A)) = grad f cprod va(A) + f curl va(A)
+$
++ $
+  curl (va(A) cprod va(B)) = (va(B) dprod grad) A - (va(A) dprod grad) B + va(A)(div va(B)) - va(B)(div va(A))
+$
