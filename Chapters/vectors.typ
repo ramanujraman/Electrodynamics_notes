@@ -364,3 +364,14 @@ $
 + $
   curl (va(A) cprod va(B)) = (va(B) dprod grad) A - (va(A) dprod grad) B + va(A)(div va(B)) - va(B)(div va(A))
 $
+#example[
+  So as an example let's prove the second identity. I'll be mainly resorting to levi-civita tensor. So I want to show that $grad (va(A) dprod va(B))= va(A)
+  cprod (grad cprod B) + va(B) cprod (grad cprod A) + (va(A) dprod grad)va(B) + (va(B) dprod grad)va(A)$ and I can re-write the above expression in index
+  notation as
+  $
+    partial_(i) (a_j b_j) = epsilon_(i j k) partial_(k) b_j a_i + epsilon_(i j k) partial_(k) a_j b_i + partial_(i) a_j b_j + partial_(i) b_j a_j
+  $
+]
+#exercise[
+  Prove the above identities.
+]
