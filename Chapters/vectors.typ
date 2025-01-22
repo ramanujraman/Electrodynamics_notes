@@ -364,14 +364,93 @@ $
 + $
   curl (va(A) cprod va(B)) = (va(B) dprod grad) A - (va(A) dprod grad) B + va(A)(div va(B)) - va(B)(div va(A))
 $
-#example[
+/*#example[
   So as an example let's prove the second identity. I'll be mainly resorting to levi-civita tensor. So I want to show that $grad (va(A) dprod va(B))= va(A)
   cprod (grad cprod B) + va(B) cprod (grad cprod A) + (va(A) dprod grad)va(B) + (va(B) dprod grad)va(A)$ and I can re-write the above expression in index
   notation as
   $
     partial_(i) (a_j b_j) = epsilon_(i j k) partial_(k) b_j a_i + epsilon_(i j k) partial_(k) a_j b_i + partial_(i) a_j b_j + partial_(i) b_j a_j
   $
-]
+]*/
 #exercise[
   Prove the above identities.
+]
+=== Second Derivative
+So we defined the all shorts of first derivatives possible for a scalar and vector fields. Now to talk about second derivatives and we should talk about all the
+possible second derivatives that are possible.
++ For a scalar function $f$ : $grad f$ is vector so we can have
+  + $curl (grad f)$
+  + $div (grad f)$
++ For a vector function $va(v)$ :
+  + $div va(v)$ is a scalar so we can have:
+    + $grad (div va(v))$
+  + $curl va(v)$ is a vector so we can have:
+    + $div (curl va(v))$
+    + $curl (curl va(v))$
+Now not all of the are exciting but are just identities and can be explained in terms of others one of the interesting one is the *Laplace operator* which is
+defined as
+#definition("Laplace Operator")[The Laplace operator is defined as
+  $
+    laplacian = grad dprod grad
+  $<def-eq-laplacian-operator>
+]
+Now interesting thing about $laplacian$ is that it can act on both a scalar function and a vector function.
+#remark[
+  Sometimes the people tend to confuse laplacian with $grad (div va(v))$ but they are not same.
+]
+Now what about the other quantities? Go ahead and figure out they don't give anything new and exciting. But I'll leave you with some exercises to work out some
+important results.
+#exercise[
+  Show that $curl (grad f)=0$ for any scalar function $f$.
+]
+#exercise[
+  Show that $div (curl va(v))=0$ for any vector function $va(v)$.
+]
+#exercise[
+  Show that $curl (curl va(v))=grad (div va(v))-laplacian va(v)$ for any vector function $va(v)$.
+]
+== Integral Calculus
+Similar to differntial calculus now define a whole class of integrals now that we have freedom of moving in any direction. So let's start with the simplest
+#definition("Line Integral")[The line integral of a vector function $va(v)$ along a curve $C$ is defined as
+  $
+    integral_C va(v) dprod dd(l) = integral_(va(a))^(va(b)) va(v) dprod dd(l)
+  $<defn-line-integral>
+]
+#definition("Surface Integral")[
+  The surface integral of a vector function $va(v)$ over a surface $S$ is defined as
+  $
+    integral_S va(v) dprod dd(a) = integral.double  va(v) dprod vu(n) w_1 dd(q_1) w_2 dd(q_2)
+  $<defn-surface-integral>
+  where $w_1$ and $w_2$ are weights and $dd(q_1)$ and $dd(q_2)$ are the area elements.
+]
+#definition("Volume Integral")[
+  The volume integral of a vector function $T$ over a volume $V$ is defined as
+  $
+    integral_V T dd(tau) = integral_V T dd(tau)
+  $<defn-volume-integral>
+]
+=== Fundamental Theorems in Vector Calculus
+#theorem("The Fundamental Theorems for Gradients")[
+  Let $f$ be a scalar function and $va(v)$ be a vector function then the following results hold
+  $
+    integral_(va(a))^(va(b)) grad T dprod dd(l) = T(va(b))-T(va(a))
+  $<eq-fund-thm-grad>
+]
+#corollary[
+  $integral_(a)^(b)(grad T) dprod dd(va(l))$ is independent of the path between $va(a)$ and $va(b)$.
+]
+#corollary[
+  $integral.cont (grad T) dprod dd(va(l)) = 0$, means both initial and end points have same value .
+]
+#theorem("Gauss's Divergence Theorem")[
+  Let $va(v)$ be a vector function and $S$ be a closed surface then the following results hold
+  $
+    integral_(V) (div va(v)) dd(tau) = integral.cont_S va(v) dprod dd(va(a))
+  $<eq-gauss-div-thm>
+]
+#theorem("Stokes Theorem")[
+  Let $va(v)$ be a vector function and $C$ be a closed curve then the following results hold
+  $
+    integral_S (curl va(v)) dprod dd(va(a)) = integral.cont_P va(v) dprod dd(va(l))
+  $<eq-stokes-thm>
 ]

@@ -45,4 +45,7 @@
 
 #pagebreak()
 #include "Chapters/vectors.typ"
+#include "Chapters/electrostat.typ"
 #include "Chapters/Electric_Field_in_Matter.typ"
+#include "Chapters/maxwell_eqn.typ"
+#include "Chapters/EM_waves.typ"
