@@ -102,7 +102,7 @@ hand side zero. So by using equation of continuity we can write $div va(J) = -pd
 we have $div va(J) = -epsilon_0 pdv(div(va(E)),t)$ and hence we have $va(J)= -epsilon_0 pdv(va(E),t)$ and hence the corrected equation is
 $
   curl va(B) = mu_0 va(J) + mu_0 epsilon_0 pdv(va(E),t)
-$<eq-curl-B>
+$<eq_curl-B>
 and we have a quantity called *displacement current* that we define as
 #definition("Displacement Current")[
   We define the displacement current as
